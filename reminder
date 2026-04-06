@@ -1,0 +1,14 @@
+- Installing PostgreSQL
+sudo apt update
+sudo apt install postgresql postgresql-contrib
+
+- Version Check
+psql --version
+
+- Starting PostgreSQL
+sudo service postgresql start
+ 
+- Enter psql shell
+sudo -u postgres psql
+
+- Postgres 
