@@ -1,6 +1,6 @@
 import { CLICommand, getCommands } from "./commands";
 
-function commandHelp(cmdName: string, ...args: string[]) {
+async function commandHelp(cmdName: string, ...args: string[]) {
     
     console.log(`Commands:`);
 

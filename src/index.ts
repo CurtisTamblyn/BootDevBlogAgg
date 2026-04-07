@@ -1,13 +1,11 @@
-import { exit } from "node:process";
 import { getCommands, runCommand } from "./commands";
-import { Config, readConfig, setUser } from "./config";
 
-function main() {
+async function main() {
     
     const args = process.argv;
     if(args.length <= 2) {
         console.log("Blog Aggregator: No commands passed. Pass 'help' for help.");
-        exit(1);
+        process.exit(1);
     }
 
     // Sort out input variables into command and parameters
@@ -19,16 +17,16 @@ function main() {
 
     // Execute command, in try/catch in case command errors and we'll print it here and return 1
     try {
-        runCommand(commandRegistry, commandName, ...commandParams);
+        await runCommand(commandRegistry, commandName, ...commandParams);
     }
     catch(error) {
         const e = error as Error;
         console.log(e.message);
-        exit(1);
+        process.exit(1);
     }
     
     // Falltrough, assume successful operation and return 0
-    exit(0);
+    process.exit(0);
 }
 
-main();
+await main();

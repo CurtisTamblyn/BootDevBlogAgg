@@ -1,12 +1,19 @@
 import { setUser } from "./config";
 import { CLICommand } from "./commands";
+import { getUser } from "./lib/db/queries/users";
 
-function commandLogin(cmdName: string, ...args: string[]) {
+async function commandLogin(cmdName: string, ...args: string[]) {
     if(args.length <= 0) {
         throw new Error("Login requires one parameter: Login name");
     }
 
     const username = args[0];
+
+    // Make sure the requested user exists
+    const userResult = await getUser(username);
+    if(!userResult) {
+        throw new Error(`User does not exist: ${username}`);
+    }
 
     setUser(username);
 
