@@ -3,11 +3,13 @@ import { LoginCommand } from "./command-login";
 import { HelpCommand } from "./command-help";
 import { RegisterCommand } from "./command-register";
 import { ResetCommand } from "./command-reset";
+import { ListUsersCommand } from "./command-listusers";
+import { AggCommand } from "./command-agg";
 
 // Our command keys are listed here
 // The array is the truth, all other command keys are derived from it
 // Done this way to give some extra compile-time protection from missing command details
-export const CommandKeys = ["login", "register", "reset", "help" ] as const;
+export const CommandKeys = ["agg", "login", "register", "users", "reset", "help" ] as const;
 export type Commands = EnforceLowercase<typeof CommandKeys[number]>;
 
 
@@ -31,6 +33,9 @@ export function getCommands(): CommandsRegistry {
         let cliCommand : CLICommand;
 
         switch(command) {
+            case "agg":
+                cliCommand = AggCommand;
+                break;
             case "login":
                 cliCommand = LoginCommand;
                 break;
@@ -42,6 +47,9 @@ export function getCommands(): CommandsRegistry {
                 break;
             case "reset":
                 cliCommand = ResetCommand;
+                break;
+            case "users":
+                cliCommand = ListUsersCommand;
                 break;
             default: assertNever(command); break;
         }
