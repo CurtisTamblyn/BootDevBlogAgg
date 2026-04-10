@@ -1,6 +1,6 @@
 import { CLICommand, getCommands } from "./commands";
 import { setUser } from "./config";
-import { createUser, getUser } from "./lib/db/queries/users";
+import { createUser, getUserFromName } from "./lib/db/queries/users";
 
 async function commandHelp(cmdName: string, ...args: string[]) {
     if(args.length <= 0) {
@@ -10,7 +10,7 @@ async function commandHelp(cmdName: string, ...args: string[]) {
     const username = args[0];
 
     // First check if a user with this name exists, error if so
-    const userResult = await getUser(username);
+    const userResult = await getUserFromName(username);
     if(userResult != null) {
         throw new Error(`User with name ${username} already exists.`);
     }

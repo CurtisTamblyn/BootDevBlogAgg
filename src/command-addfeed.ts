@@ -1,7 +1,7 @@
 import { CLICommand } from "./commands";
 import { readConfig } from "./config";
 import { createFeed } from "./lib/db/queries/feeds";
-import { getUser } from "./lib/db/queries/users";
+import { getUserFromName } from "./lib/db/queries/users";
 import { feeds } from "./lib/db/schema";
 import { printFeed } from "./rss";
 
@@ -16,7 +16,7 @@ async function commandAddFeed(cmdName: string, ...args: string[]) {
         throw new Error("AddFeed Error: No logged in user found.");
     }
 
-    const user = await getUser(username);
+    const user = await getUserFromName(username);
     if(!user) {
         throw new Error(`AddFeed Error: Could not locate user: ${username}`);
     }
@@ -26,6 +26,9 @@ async function commandAddFeed(cmdName: string, ...args: string[]) {
     const userID = user.id;
 
     const result = await createFeed(feedName, feedURL, userID);
+    if(!result) {
+        throw new Error("AddFeed Error: An error occured when creating new feed");
+    }
 
     console.log(`Created RSS Feed`);
     printFeed(result);

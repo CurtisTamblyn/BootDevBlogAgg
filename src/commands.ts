@@ -6,11 +6,12 @@ import { ResetCommand } from "./command-reset";
 import { ListUsersCommand } from "./command-listusers";
 import { AggCommand } from "./command-agg";
 import { AddFeedCommand } from "./command-addfeed";
+import { ListFeedsCommand } from "./command-listfeeds";
 
 // Our command keys are listed here
 // The array is the truth, all other command keys are derived from it
 // Done this way to give some extra compile-time protection from missing command details
-export const CommandKeys = ["agg", "addfeed", "login", "register", "users", "reset", "help" ] as const;
+export const CommandKeys = ["agg", "addfeed", "feeds", "login", "register", "users", "reset", "help" ] as const;
 export type Commands = EnforceLowercase<typeof CommandKeys[number]>;
 
 
@@ -39,6 +40,9 @@ export function getCommands(): CommandsRegistry {
                 break;
             case "addfeed":
                 cliCommand = AddFeedCommand;
+                break;
+            case "feeds":
+                cliCommand = ListFeedsCommand;
                 break;
             case "login":
                 cliCommand = LoginCommand;
