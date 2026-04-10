@@ -1,3 +1,4 @@
+import { Feed } from "./lib/db/schema";
 
 export type RSSFeed = {
     channel: {
@@ -100,3 +101,8 @@ function RSSItemFactoryParse(parsedItems : any) : RSSItem[] {
 
     return rssItems;
 }
+
+
+export async function printFeed(feed : Feed) {
+    console.log(JSON.stringify(feed));
+};

@@ -8,6 +8,13 @@
       "when": 1775511587018,
       "tag": "0000_boring_the_leader",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1775748531610,
+      "tag": "0001_talented_lake",
+      "breakpoints": true
     }
   ]
 }
