@@ -1,5 +1,6 @@
 import { CLICommand } from "./commands";
 import { readConfig } from "./config";
+import { createFeedFollowFromURLUserName } from "./lib/db/queries/feedfollows";
 import { createFeed } from "./lib/db/queries/feeds";
 import { getUserFromName } from "./lib/db/queries/users";
 import { feeds } from "./lib/db/schema";
@@ -29,6 +30,8 @@ async function commandAddFeed(cmdName: string, ...args: string[]) {
     if(!result) {
         throw new Error("AddFeed Error: An error occured when creating new feed");
     }
+
+    await createFeedFollowFromURLUserName(username, feedURL);
 
     console.log(`Created RSS Feed`);
     printFeed(result);

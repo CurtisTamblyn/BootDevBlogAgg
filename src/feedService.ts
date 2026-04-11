@@ -8,6 +8,7 @@ export async function fetchFeed(feedURL : string) {
         mode: "cors",
         headers: {
             "User-Agent": "gator",
+            accept: "application/rss+xml",
         }
     })
 

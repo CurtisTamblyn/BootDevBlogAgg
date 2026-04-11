@@ -12,3 +12,5 @@ sudo service postgresql start
 sudo -u postgres psql
 
 - Postgres 
+\c <dbname>
+Connect to database

@@ -15,6 +15,13 @@
       "when": 1775748531610,
       "tag": "0001_talented_lake",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1775856592990,
+      "tag": "0002_bizarre_omega_flight",
+      "breakpoints": true
     }
   ]
 }
