@@ -9,6 +9,7 @@ import { AddFeedCommand } from "./command-addfeed";
 import { ListFeedsCommand } from "./command-listfeeds";
 import { FollowCommand } from "./command-follow";
 import { FollowingCommand } from "./command-following";
+import { User } from "./lib/db/schema";
 
 // Our command keys are listed here
 // The array is the truth, all other command keys are derived from it
@@ -17,13 +18,14 @@ export const CommandKeys = ["follow", "following", "agg", "addfeed", "feeds", "l
 export type Commands = EnforceLowercase<typeof CommandKeys[number]>;
 
 
-type CommandHandler = (cmdName: string, ...args: string[]) => Promise<void>;
+export type CommandHandler = (cmdName: string, ...args: string[]) => Promise<void>;
 
 export type CLICommand = {
     name: Commands;
     description: string;
     callback: CommandHandler;
 }
+
 
 export type CommandsRegistry = Record<string, CLICommand>;
 

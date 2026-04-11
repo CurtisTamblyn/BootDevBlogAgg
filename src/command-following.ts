@@ -1,12 +1,12 @@
+import { getLoggedInUserHandler } from "./command-decorators";
 import { CLICommand, getCommands } from "./commands";
 import { readConfig } from "./config";
 import { createFeedFollowFromURLUserName, getFeedFollowersForUser } from "./lib/db/queries/feedfollows";
+import { User } from "./lib/db/schema";
 
-async function commandFollowing(cmdName: string, ...args: string[]) {
+async function commandFollowing(cmdName: string, user: User, ...args: string[]) {
     
-    const username = readConfig().currentUserName;
-
-    const feeds = await getFeedFollowersForUser(username);
+    const feeds = await getFeedFollowersForUser(user.name);
     
     if(feeds.length <= 0) {
         console.log("You currently don't follow any feeds.");
@@ -22,5 +22,5 @@ async function commandFollowing(cmdName: string, ...args: string[]) {
 export const FollowingCommand : CLICommand = {
     name: "follow",
     description: "Show all feeds the user is following",
-    callback: commandFollowing,
+    callback: getLoggedInUserHandler(commandFollowing),
 };
