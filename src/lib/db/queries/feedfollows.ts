@@ -1,6 +1,6 @@
 import { db } from "..";
 import { feedFollows, feeds, users } from "../schema";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { firstOrUndefined } from "./utils";
 
 export async function createFeedFollowFromURLUserName(username: string, feedURL: string) {
@@ -23,6 +23,20 @@ export async function createFeedFollow(userId: string, feedId: string) {
         feedId: feedId,
     }).returning();
     return firstOrUndefined(result);
+}
+
+export async function deleteFeedFollow(userId: string, feedURL: string) {
+
+    const feedId = firstOrUndefined(await db.select({id: feeds.id}).from(feeds).where(eq(feeds.url, feedURL)));
+    if(!feedId) {
+        throw new Error(`Could not find feed with URL: ${feedId}`);
+    }
+
+    await db.delete(feedFollows)
+        .where(
+            and(
+                eq(feedFollows.userId, userId), 
+                eq(feedFollows.feedId, feedId.id)));
 }
 
 
