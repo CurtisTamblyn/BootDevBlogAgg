@@ -22,6 +22,20 @@
       "when": 1775856592990,
       "tag": "0002_bizarre_omega_flight",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1776032700951,
+      "tag": "0003_mean_squadron_supreme",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1776033303368,
+      "tag": "0004_glossy_blue_marvel",
+      "breakpoints": true
     }
   ]
 }

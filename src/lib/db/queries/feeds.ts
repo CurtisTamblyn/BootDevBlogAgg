@@ -1,6 +1,6 @@
 import { db } from "..";
 import { feeds, users } from "../schema";
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import { firstOrUndefined } from "./utils";
 
 export async function createFeed(name: string, url: string, userId: string) {
@@ -20,4 +20,23 @@ export async function getAllFeedsWithCreator() {
         creatorName: users.name,
     }).from(feeds).innerJoin(users, eq(feeds.userId, users.id));
     return result;
+}
+
+export async function markFeedFethed(feedId: string) {
+
+    const result = await db.update(feeds)
+        .set({lastFetchedAt: sql`NOW()`})
+        .where(eq(feeds.id, feedId))
+        .returning();
+    
+    return result;
+}
+
+export async function getOldestFeed() {
+
+    const nextFeed : { id:string, name:string, url:string }[] = 
+        await db
+        .execute(sql`SELECT id, name, url FROM feeds ORDER BY last_fetched_at NULLS FIRST LIMIT(1)`);
+
+    return firstOrUndefined(nextFeed);
 }
