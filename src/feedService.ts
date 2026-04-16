@@ -2,6 +2,7 @@ import { XMLParser } from "fast-xml-parser";
 import { RSSFeed, RSSFeedFactoryParse } from "./rss";
 import { getOldestFeed, markFeedFethed } from "./lib/db/queries/feeds";
 import { feedFollows } from "./lib/db/schema";
+import { createPost, postURLExists } from "./lib/db/queries/posts";
 
 type ScrapeResultSuccess = {
     result: "success";
@@ -33,12 +34,14 @@ export async function scrapeNextFeed() : Promise<ScrapeResult> {
 
     console.log(`Feed retrieved for ${feed.name}`);
     for(const item of feedContent.channel.item) {
-        console.log(`** ${item.title} **`);
-        console.log(`Date: ${item.pubDate}`);
-        console.log(`Link: ${item.link}`);
-        console.log(`Descripton: ${item.description}`);
-        console.log("");
+        // Save feed item to the DB if it doesn't exist
+        const exists = await postURLExists(item.link);
+        if(!exists) {
+            createPost(item, feed.id);
+        }
     }
+
+
 
     return { result: "success" };
 }

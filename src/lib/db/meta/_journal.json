@@ -36,6 +36,13 @@
       "when": 1776033303368,
       "tag": "0004_glossy_blue_marvel",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1776133080447,
+      "tag": "0005_friendly_firedrake",
+      "breakpoints": true
     }
   ]
 }

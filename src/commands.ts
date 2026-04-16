@@ -11,11 +11,12 @@ import { FollowCommand } from "./command-follow";
 import { FollowingCommand } from "./command-following";
 import { User } from "./lib/db/schema";
 import { UnfollowCommand } from "./command-unfollow";
+import { BrowseCommand } from "./command-browse";
 
 // Our command keys are listed here
 // The array is the truth, all other command keys are derived from it
 // Done this way to give some extra compile-time protection from missing command details
-export const CommandKeys = ["follow", "unfollow", "following", "agg", "addfeed", "feeds", "login", "register", "users", "reset", "help" ] as const;
+export const CommandKeys = ["follow", "unfollow", "following", "browse", "agg", "addfeed", "feeds", "login", "register", "users", "reset", "help" ] as const;
 export type Commands = EnforceLowercase<typeof CommandKeys[number]>;
 
 
@@ -48,6 +49,9 @@ export function getCommands(): CommandsRegistry {
                 break;
             case "following":
                 cliCommand = FollowingCommand;
+                break;
+            case "browse":
+                cliCommand = BrowseCommand;
                 break;
             case "agg":
                 cliCommand = AggCommand;
